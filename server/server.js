@@ -6,15 +6,16 @@ const app = express();
 const port = 5000;
 
 // Middleware
-app.use(cors()); // Allows your React app to make requests to this server
+app.use(cors()); // Allows React app to make requests to this server
 app.use(express.json()); // Parses incoming JSON requests
 
 // Set up MySQL connection
 const db = mysql.createConnection({
   host: 'localhost',
+  port: 3306,
   user: 'root',
-  password: 'password',
-  database: 'mydb'
+  password: '0000',
+  database: 'music_player'
 });
 
 db.connect((err) => {
