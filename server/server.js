@@ -6,7 +6,9 @@ const app = express();
 const port = 5000;
 
 // Middleware
-app.use(cors()); // Allows React app to make requests to this server
+app.use(cors({
+  origin: '*', //http://localhost:5000/songs
+})); // Allows React app to make requests to this server
 app.use(express.json()); // Parses incoming JSON requests
 
 // Set up MySQL connection
@@ -26,14 +28,33 @@ db.connect((err) => {
   }
 });
 
-// Example route to get users from MySQL
-/* app.get('/api/users', (req, res) => {
-  db.query('SELECT * FROM users', (err, results) => {
+app.get('/artists', (req, res) => {
+  db.query('SELECT * FROM artists', (err, results) => {
     if (err) throw err;
     res.json(results);
+  })
+});
+
+app.get('/songs', (req, res) => {
+  db.query('SELECT * FROM songs', (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  } );
+});
+
+app.post('/add-artist', (req, res) => {
+  const {name, profile_pic_path} = req.body;
+  const query = `INSERT INTO artists (name, profile_pic_path) VALUES (?, ?)`;
+  const values = [name, profile_pic_path];
+
+  db.query(query, values, (err, result) => {
+    if(err) {
+      res.status(500).json({ error: 'Failed to add artist', message: err.message });
+    } else {
+      res.status(201).json({ message: 'Artist added successfully', artistID: result.insertId });
+    }
   });
 });
-*/
 
 app.post('/add-song', (req, res) => {
   const {title, artist_id, album, duration, file_path} = req.body;
