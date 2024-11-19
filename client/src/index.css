@@ -1,13 +1,170 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("./spotify-mix-font/stylesheet.css");
+
+:root {
+  --black: #121212;
+  --white: #FFFFFF;
+  --accent-color: #1ed760;
+  --accent-color-highlight: ##3be477;
+
+  --encore-text-size-smaller-2: 0.75rem;
+        --encore-text-size-smaller: 0.875rem;
+        --encore-text-size-base: 1rem;
+        --encore-text-size-larger: 1.5rem;
+        --encore-text-size-larger-2: 2rem;
+        --encore-text-size-larger-3: 3rem;
+        --encore-text-size-larger-4: 4rem;
+        --encore-text-size-larger-5: 6rem;
+        --encore-border-width-hairline: 1px;
+        --encore-border-width-thin: 2px;
+        --encore-border-width-thick: 4px;
+        --encore-border-width-thicker: 8px;
+        --encore-border-width-focus: 3px;
+        --encore-graphic-size-decorative-smaller-2: 12px;
+        --encore-graphic-size-decorative-smaller: 16px;
+        --encore-graphic-size-decorative-base: 24px;
+        --encore-graphic-size-decorative-larger: 32px;
+        --encore-graphic-size-decorative-larger-2: 40px;
+        --encore-graphic-size-decorative-larger-3: 48px;
+        --encore-graphic-size-decorative-larger-4: 64px;
+        --encore-graphic-size-decorative-larger-5: 88px;
+        --encore-graphic-size-informative-smaller-2: 0.75rem;
+        --encore-graphic-size-informative-smaller: 1rem;
+        --encore-graphic-size-informative-base: 1.5rem;
+        --encore-graphic-size-informative-larger: 2rem;
+        --encore-graphic-size-informative-larger-2: 2.5rem;
+        --encore-graphic-size-informative-larger-3: 3rem;
+        --encore-graphic-size-informative-larger-4: 4rem;
+        --encore-graphic-size-informative-larger-5: 5.5rem;
+        --encore-spacing-tighter-5: 2px;
+        --encore-spacing-tighter-4: 4px;
+        --encore-spacing-tighter-3: 6px;
+        --encore-spacing-tighter-2: 8px;
+        --encore-spacing-tighter: 12px;
+        --encore-spacing-base: 16px;
+        --encore-spacing-looser: 24px;
+        --encore-spacing-looser-2: 32px;
+        --encore-spacing-looser-3: 48px;
+        --encore-spacing-looser-4: 64px;
+        --encore-spacing-looser-5: 96px;
+        --encore-spacing-looser-6: 128px;
+        --encore-control-size-smaller: 32px;
+        --encore-control-size-base: 48px;
+        --encore-control-size-larger: 56px;
+        --encore-layout-margin-tighter: 24px;
+        --encore-layout-margin-base: 32px;
+        --encore-layout-margin-looser: 64px;
+        --encore-corner-radius-smaller: 2px;
+        --encore-corner-radius-base: 4px;
+        --encore-corner-radius-larger: 6px;
+        --encore-corner-radius-larger-2: 8px;
+        --encore-corner-radius-larger-3: 16px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+*{
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'spotify-mix-font', 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif; 
+  background-color: var(--black);
+  color: var(--white);
+}
+
+main{
+  position: absolute;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: column;
+    inline-size: 100%;
+    min-block-size: 100%;
+    overflow-wrap: break-word;
+    overflow: auto;
+}
+
+.logo{
+  fill: var(--white);
+  width: 40px;
+  height: 40px;
+}
+
+header.logo-only {
+  display: flex;
+  padding-top: 32px;
+  padding-bottom: 24px;
+  min-height: 32px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  box-sizing: content-box;
+}
+
+
+
+section.form-section{
+  flex: 1;
+  flex-grow: 1;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding-bottom: 0px;
+  width: 100%;
+
+}
+
+.form{
+  width: 324px;
+}
+
+
+section h1{
+  font-size: var(--encore-text-size-larger-3);
+  text-align: center;
+  text-wrap:wrap;
+}
+
+input::placeholder{
+  color: grey;
+  font-size: var(--encore-text-size-smaller-2);
+}
+
+.primary-btn{
+  background-color: var(--accent-color);
+  color: var(--black);
+  font-size: var(--encore-text-size-base);
+  font-weight: bold;
+  padding: 16px 0 16px 0;
+  border-radius: 100px;
+  border: 0;
+  width: 100%;
+}
+
+.primary-btn:hover{
+  background-color: #4be982;
+}
+
+.form>form{
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+form>.inputs-box{
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+}
+
+.form input {
+  width: 100%;
+  border: 0;
+  padding: 10px 12px 10px 12px;
+}
+
+.additional-text{
+  text-align: center;
+  color: lightgray;
 }
