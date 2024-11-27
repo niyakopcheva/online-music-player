@@ -1,18 +1,18 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../firebase";
 
 
-export default function SignUp() {
+export default function LogIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
-    const handleSignUp = async (e) => {
+    const handleLogIn = async (e) => {
         e.preventDefault();
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            alert("User registered successfully!");
+            await signInWithEmailAndPassword(auth, email, password)
+            alert("User logged in successfully!");
         } catch (err) {
             console.error("Error during sign-up:", err.message);
             setError(err.message);
@@ -28,9 +28,9 @@ export default function SignUp() {
             <section className="form-section">
                 <div className="form">
                     <header>
-                        <h1 className="title-large">Sign up to start listening</h1>
+                        <h1 className="title-large">Log in to Spotify</h1>
                     </header>
-                    <form onSubmit={handleSignUp}>
+                    <form onSubmit={handleLogIn}>
                         <div className="inputs-box">
                         <label htmlFor="femail">Email address</label> <br/>
                         <input 
@@ -49,8 +49,8 @@ export default function SignUp() {
                             /> <br/>
                     </div>
                         
-                        <button type="submit" className="primary-btn">Sign Up</button>
-                        <div className="additional-text">Already have an account? <a href="/log-in">Log in</a></div>
+                        <button type="submit" className="primary-btn">Log In</button>
+                        <div className="additional-text">Don't have an account? <a href="/sign-up">Sign up</a></div>
                     </form>
                     {error && <p>{error}</p>}
                 </div>
