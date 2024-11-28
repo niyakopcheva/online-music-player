@@ -26,13 +26,13 @@ export default function SignUp() {
             </header>
 
             <section className="form-section">
-                <div className="form">
+                <div className="form flex flex-col gap-12">
                     <header>
-                        <h1 className="title-large">Sign up to start listening</h1>
+                        <h1 className="font-bold">Sign up to start listening</h1>
                     </header>
                     <form onSubmit={handleSignUp}>
                         <div className="inputs-box">
-                        <label htmlFor="femail">Email address</label> <br/>
+                        <label className="font-semibold" htmlFor="femail">Email address</label> <br/>
                         <input 
                             type="email" 
                             id="femail" 
@@ -40,7 +40,7 @@ export default function SignUp() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         /> <br/>
-                        <label htmlFor="fpass">Password</label> <br/>
+                        <label className="font-semibold" htmlFor="fpass">Password</label> <br/>
                         <input 
                             type="password" 
                             id="fpass"
@@ -50,7 +50,7 @@ export default function SignUp() {
                     </div>
                         
                         <button type="submit" className="primary-btn">Sign Up</button>
-                        <div className="additional-text">Already have an account? <a href="/log-in">Log in</a></div>
+                        <div className="additional-text">Already have an account? <a className="underline" href="/log-in">Log in</a></div>
                     </form>
                     {error && <p>{error}</p>}
                 </div>

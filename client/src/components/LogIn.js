@@ -26,13 +26,13 @@ export default function LogIn() {
             </header>
 
             <section className="form-section">
-                <div className="form">
+                <div className="form flex flex-col gap-12">
                     <header>
-                        <h1 className="title-large">Log in to Spotify</h1>
+                        <h1 className="font-bold">Log in to Spotify</h1>
                     </header>
                     <form onSubmit={handleLogIn}>
                         <div className="inputs-box">
-                        <label htmlFor="femail">Email address</label> <br/>
+                        <label className="font-semibold" htmlFor="femail">Email address</label> <br/>
                         <input 
                             type="email" 
                             id="femail" 
@@ -40,7 +40,7 @@ export default function LogIn() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         /> <br/>
-                        <label htmlFor="fpass">Password</label> <br/>
+                        <label className="font-semibold" htmlFor="fpass">Password</label> <br/>
                         <input 
                             type="password" 
                             id="fpass"
@@ -50,7 +50,7 @@ export default function LogIn() {
                     </div>
                         
                         <button type="submit" className="primary-btn">Log In</button>
-                        <div className="additional-text">Don't have an account? <a href="/sign-up">Sign up</a></div>
+                        <div className="additional-text">Don't have an account? <a className="underline" href="/sign-up">Sign up</a></div>
                     </form>
                     {error && <p>{error}</p>}
                 </div>
