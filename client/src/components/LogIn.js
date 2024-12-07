@@ -1,18 +1,22 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../firebase";
+import Dashboard from "./Dashboard";
+import { useNavigate } from "react-router-dom";
 
 
 export default function LogIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const handleLogIn = async (e) => {
         e.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, password)
             alert("User logged in successfully!");
+            navigate("/");
         } catch (err) {
             console.error("Error during sign-up:", err.message);
             setError(err.message);
@@ -34,6 +38,7 @@ export default function LogIn() {
                         <div className="inputs-box">
                         <label className="font-semibold" htmlFor="femail">Email address</label> <br/>
                         <input 
+                            className="text-black"
                             type="email" 
                             id="femail" 
                             placeholder="example@email.com"
@@ -49,7 +54,7 @@ export default function LogIn() {
                             /> <br/>
                     </div>
                         
-                        <button type="submit" className="primary-btn">Log In</button>
+                        <button type="submit" className="primary-btn" >Log In</button>
                         <div className="additional-text">Don't have an account? <a className="underline" href="/sign-up">Sign up</a></div>
                     </form>
                     {error && <p>{error}</p>}

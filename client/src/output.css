@@ -577,6 +577,14 @@ video {
   width: 1.5rem;
 }
 
+.w-8 {
+  width: 2rem;
+}
+
+.h-8 {
+  width: 2rem;
+}
+
 .border-collapse {
   border-collapse: collapse;
 }
@@ -742,6 +750,11 @@ section h1{
   text-align: center;
   text-wrap:wrap;
 }
+ 
+input{
+  color: #121212;
+  font-weight: 400;
+}
 
 input::placeholder{
   color: grey;
@@ -789,3 +802,8 @@ form>.inputs-box{
 a{
   color: #4be982;
 }
+
+.rounded-full {
+  border-radius: 9999px;
+}
+

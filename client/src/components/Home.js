@@ -29,7 +29,7 @@ export default function Home() {
         {songs.map((song) => (
           <li key={song.song_id}>
             <strong>{song.title}</strong> <br></br>
-            <img className='w-6 h-6' src={getProfilePic(artists, song.artist_id)}></img> {getArtistName(artists, song.artist_id)} <br></br>
+            <img className='rounded-full w-8 h-8' src={getProfilePic(artists, song.artist_id)}></img> {getArtistName(artists, song.artist_id)} <br></br>
             <audio controls autoPlay>
               <source src={song.file_path} type='audio/mpeg'></source>
               Your browser does not support the audio element.
