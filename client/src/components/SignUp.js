@@ -6,17 +6,27 @@ import { auth } from "../firebase";
 export default function SignUp() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [repeatPassword, setRepeatPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const handleSignUp = async (e) => {
         e.preventDefault();
+
+        if(password !== repeatPassword) {
+            return setError("Passwords do not match")
+        }
+
         try {
+            setLoading(true);
             await createUserWithEmailAndPassword(auth, email, password);
             alert("User registered successfully!");
         } catch (err) {
             console.error("Error during sign-up:", err.message);
             setError(err.message);
         }
+
+        setLoading(false);
     };
 
     return (
@@ -30,29 +40,44 @@ export default function SignUp() {
                     <header>
                         <h1 className="font-bold">Sign up to start listening</h1>
                     </header>
+                    {error  && (
+                    <div className="px-3 py-3 bg-red-600 text-center rounded">
+                        <p>{error}</p>
+                    </div>)
+                    }
                     <form onSubmit={handleSignUp}>
                         <div className="inputs-box">
+
                         <label className="font-semibold" htmlFor="femail">Email address</label> <br/>
                         <input 
+                            className="text-black font-normal"
                             type="email" 
                             id="femail" 
                             placeholder="example@email.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         /> <br/>
+
                         <label className="font-semibold" htmlFor="fpass">Password</label> <br/>
                         <input 
+                            className="text-black font-normal"
                             type="password" 
                             id="fpass"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onBlur={(e) => setPassword(e.target.value)}
                             /> <br/>
+
+                            <label className="font-semibold" htmlFor="fpass">Repeat password</label> <br/>
+                        <input 
+                        className="text-black font-normal"
+                            type="password" 
+                            id="fpass"
+                            onBlur={(e) => {setRepeatPassword(e.target.value)}}
+                        /> <br/>
                     </div>
                         
-                        <button type="submit" className="primary-btn">Sign Up</button>
+                        <button type="submit" className="primary-btn" disabled={loading}>Sign Up</button>
                         <div className="additional-text">Already have an account? <a className="underline" href="/log-in">Log in</a></div>
                     </form>
-                    {error && <p>{error}</p>}
                 </div>
                 
             </section>

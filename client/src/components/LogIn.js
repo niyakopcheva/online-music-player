@@ -1,7 +1,6 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../firebase";
-import Dashboard from "./Dashboard";
 import { useNavigate } from "react-router-dom";
 
 
@@ -34,30 +33,34 @@ export default function LogIn() {
                     <header>
                         <h1 className="font-bold">Log in to Spotify</h1>
                     </header>
+                    {error  && (
+                    <div className="px-3 py-3 bg-red-600 text-center rounded">
+                        <p>Incorrect username or password</p>
+                    </div>)
+                    }
                     <form onSubmit={handleLogIn}>
                         <div className="inputs-box">
                         <label className="font-semibold" htmlFor="femail">Email address</label> <br/>
                         <input 
-                            className="text-black"
+                            className="text-black font-normal"
                             type="email" 
                             id="femail" 
                             placeholder="example@email.com"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            onBlur={(e) => setEmail(e.target.value)}
                         /> <br/>
                         <label className="font-semibold" htmlFor="fpass">Password</label> <br/>
                         <input 
+                        className="text-black"
                             type="password" 
                             id="fpass"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            onBlur={(e) => setPassword(e.target.value)}
                             /> <br/>
                     </div>
                         
                         <button type="submit" className="primary-btn" >Log In</button>
                         <div className="additional-text">Don't have an account? <a className="underline" href="/sign-up">Sign up</a></div>
                     </form>
-                    {error && <p>{error}</p>}
+                    
                 </div>
                 
             </section>
