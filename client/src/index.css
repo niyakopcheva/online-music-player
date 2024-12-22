@@ -159,12 +159,13 @@ form>.inputs-box{
   display: flex;
   flex-direction: column;
   font-weight: 700;
+  gap: 8px;
 }
 
 .form input {
   width: 100%;
   border: 0;
-  padding: 10px 12px 10px 12px;
+  padding: 0px 0px 10px 12px;
 }
 
 .additional-text{

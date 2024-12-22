@@ -1,6 +1,7 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import React, { useState } from "react";
-import { auth } from "../firebase";
+import { auth, googleProvider } from "../firebase";
+import { useNavigate } from "react-router-dom";
 
 
 export default function SignUp() {
@@ -9,6 +10,7 @@ export default function SignUp() {
     const [repeatPassword, setRepeatPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -21,12 +23,26 @@ export default function SignUp() {
             setLoading(true);
             await createUserWithEmailAndPassword(auth, email, password);
             alert("User registered successfully!");
+            navigate("/");
         } catch (err) {
             console.error("Error during sign-up:", err.message);
             setError(err.message);
         }
 
         setLoading(false);
+    };
+
+    const handleSignUpWithProvider = async(provider) => {
+        try {
+            setLoading(true);
+            await signInWithPopup(auth, provider);
+            alert("User registered successfully!");
+            navigate("/");
+             
+          } catch (err) {
+            console.error("Error during sign-up:", err.message);
+            setError(err.message);
+          }
     };
 
     return (
@@ -48,7 +64,7 @@ export default function SignUp() {
                     <form onSubmit={handleSignUp}>
                         <div className="inputs-box">
 
-                        <label className="font-semibold" htmlFor="femail">Email address</label> <br/>
+                        <label className="font-semibold" htmlFor="femail">Email address</label> 
                         <input 
                             className="text-black font-normal"
                             type="email" 
@@ -56,26 +72,43 @@ export default function SignUp() {
                             placeholder="example@email.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                        /> <br/>
+                        /> 
 
-                        <label className="font-semibold" htmlFor="fpass">Password</label> <br/>
+                        <label className="font-semibold" htmlFor="fpass">Password</label> 
                         <input 
                             className="text-black font-normal"
                             type="password" 
                             id="fpass"
                             onBlur={(e) => setPassword(e.target.value)}
-                            /> <br/>
+                            /> 
 
-                            <label className="font-semibold" htmlFor="fpass">Repeat password</label> <br/>
+                            <label className="font-semibold" htmlFor="fpass">Repeat password</label> 
                         <input 
                         className="text-black font-normal"
                             type="password" 
                             id="fpass"
                             onBlur={(e) => {setRepeatPassword(e.target.value)}}
-                        /> <br/>
+                        /> 
                     </div>
                         
                         <button type="submit" className="primary-btn" disabled={loading}>Sign Up</button>
+
+                        <div className="flex justify-center items-center gap-x-3">
+                        <div className="w-2/6 h-px bg-slate-400"/> or <div className="w-2/6 h-px bg-slate-400"/>
+                        </div>
+                         
+                        <button type="button" onClick={() => handleSignUpWithProvider(googleProvider)} disabled={loading}
+                        className="flex justify-center gap-x-3 items-center border-2 border-white rounded-full px-0 py-2.5 font-bold">
+                            <img src=".\logos\7123025_logo_google_g_icon.svg" className="w-10"></img>
+                        Sign up with Google
+                        </button>
+
+                        <button type="button" disabled={loading}
+                        className="flex justify-center gap-x-3 items-center border-2 border-white rounded-full px-0 py-2.5 font-bold">
+                            <img src=".\logos\icons8-facebook.svg" className="w-10"></img>
+                        Sign up with Facebook
+                        </button>
+
                         <div className="additional-text">Already have an account? <a className="underline" href="/log-in">Log in</a></div>
                     </form>
                 </div>

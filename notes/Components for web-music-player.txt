@@ -1,0 +1,25 @@
+Components for web-music-player
+1. Song component
+- #
+- photo, title
+- artist
+- duration
+
+2. Bottom song player component
+- photo
+- title, artist
+- previousBtn, playBtn, nextBtn
+- duration slider
+- volume
+
+3. Sidebar menu
+- Home dashboard
+- liked songs
+- playlists
+- genres
+- account settings
+
+4. Header
+- app logo
+- search
+- profile icon

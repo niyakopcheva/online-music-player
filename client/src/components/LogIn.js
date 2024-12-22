@@ -1,6 +1,6 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import React, { useState } from "react";
-import { auth } from "../firebase";
+import { auth, googleProvider } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
 
@@ -8,6 +8,7 @@ export default function LogIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleLogIn = async (e) => {
@@ -17,10 +18,23 @@ export default function LogIn() {
             alert("User logged in successfully!");
             navigate("/");
         } catch (err) {
-            console.error("Error during sign-up:", err.message);
+            console.error("Error during log-in:", err.message);
             setError(err.message);
         }
     };
+
+    const handleSignInWithProvider = async(provider) => {
+            try {
+                setLoading(true);
+                await signInWithPopup(auth, provider);
+                alert("User logged in successfully!");
+                navigate("/");
+                 
+              } catch (err) {
+                console.error("Error during log-in:", err.message);
+                setError(err.message);
+              }
+        };
 
     return (
         <main>
@@ -38,26 +52,43 @@ export default function LogIn() {
                         <p>Incorrect username or password</p>
                     </div>)
                     }
+                                             
+                        <button type="button" onClick={() => handleSignInWithProvider(googleProvider)} disabled={loading}
+                        className="flex justify-center gap-x-3 items-center border-2 border-white rounded-full px-0 py-2.5 font-bold">
+                        <img src=".\logos\7123025_logo_google_g_icon.svg" className="w-10"></img>
+                         Log in with Google
+                        </button>
+                    
+                        <button type="button" disabled={loading}
+                        className="flex justify-center gap-x-3 items-center border-2 border-white rounded-full px-0 py-2.5 font-bold">
+                        <img src=".\logos\icons8-facebook.svg" className="w-10"></img>
+                        Log in with Facebook
+                        </button>
+
+                    <div className="flex justify-center items-center gap-x-3">
+                    <div className="w-2/6 h-px bg-slate-400"/> or <div className="w-2/6 h-px bg-slate-400"/>
+                    </div>
+
                     <form onSubmit={handleLogIn}>
                         <div className="inputs-box">
-                        <label className="font-semibold" htmlFor="femail">Email address</label> <br/>
+                        <label className="font-semibold" htmlFor="femail">Email address</label> 
                         <input 
                             className="text-black font-normal"
                             type="email" 
                             id="femail" 
                             placeholder="example@email.com"
                             onBlur={(e) => setEmail(e.target.value)}
-                        /> <br/>
-                        <label className="font-semibold" htmlFor="fpass">Password</label> <br/>
+                        /> 
+                        <label className="font-semibold" htmlFor="fpass">Password</label> 
                         <input 
                         className="text-black"
                             type="password" 
                             id="fpass"
                             onBlur={(e) => setPassword(e.target.value)}
-                            /> <br/>
+                            /> 
                     </div>
                         
-                        <button type="submit" className="primary-btn" >Log In</button>
+                        <button type="submit" className="primary-btn" disabled={loading}>Log In</button>
                         <div className="additional-text">Don't have an account? <a className="underline" href="/sign-up">Sign up</a></div>
                     </form>
                     

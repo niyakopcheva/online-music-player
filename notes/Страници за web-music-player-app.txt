@@ -1,0 +1,28 @@
+Страници за web-music-player-app
+1. Dashboard
+- Section Last played(playlists, albums) *da pazq history na usera
+- Section New song(last added song to db)
+2. List
+- za album
+- za single
+- za playlist
+- da ima ime, 
+vid(playlist, album, single), 
+avtor, 
+play btn, shuffle btn,
+maybe search,
+list - songs
+3.Profile(for user)
+- name, number of playlists, num of followers
+- liked songs
+- playlists
+- followers & following ?
+4.Artist
+- name, num of followers
+- play btn
+- follow btn
+- discography - albums, singles
+- maybe about
+
+
+
