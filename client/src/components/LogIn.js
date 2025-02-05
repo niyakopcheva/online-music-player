@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import React, { useState } from "react";
-import { auth, googleProvider } from "../firebase";
+import { auth, facebookProvider, googleProvider } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
 
@@ -57,12 +57,6 @@ export default function LogIn() {
                         className="flex justify-center gap-x-3 items-center border-2 border-white rounded-full px-0 py-2.5 font-bold">
                         <img src=".\logos\7123025_logo_google_g_icon.svg" className="w-10"></img>
                          Log in with Google
-                        </button>
-                    
-                        <button type="button" disabled={loading}
-                        className="flex justify-center gap-x-3 items-center border-2 border-white rounded-full px-0 py-2.5 font-bold">
-                        <img src=".\logos\icons8-facebook.svg" className="w-10"></img>
-                        Log in with Facebook
                         </button>
 
                     <div className="flex justify-center items-center gap-x-3">
