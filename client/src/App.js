@@ -7,6 +7,7 @@ import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
 import Dashboard from './components/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
+import AdminPage from './components/AdminPage';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route exact path='/' element={ <PrivateRoute>  <Dashboard/> </PrivateRoute> } />
         <Route path='/sign-up' element={ <SignUp/> } />
         <Route path='/log-in' element={ <LogIn/> } />
+        <Route exact path='/admin-page' element={<PrivateRoute role='admin' > <AdminPage/> </PrivateRoute> } />
       </Routes>
     </Router>
   );

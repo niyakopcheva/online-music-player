@@ -11,7 +11,7 @@ export default function Dashboard() {
     const handleLogOut = () => {
         signOut(auth)
         .then(() => {
-            navigate("/home");
+            navigate("/log-in");
         })
         .catch((error) => {
             console.error("Error logging out:", error.message);
