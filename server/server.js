@@ -7,7 +7,7 @@ const port = 5000;
 
 // Middleware
 app.use(cors({
-  origin: '*', //http://localhost:5000/songs
+  origin: '*', 
 })); // Allows React app to make requests to this server
 app.use(express.json()); // Parses incoming JSON requests
 
@@ -57,10 +57,13 @@ app.post('/add-artist', (req, res) => {
 });
 
 app.post('/add-song', (req, res) => {
-  const {title, artist_id, album, duration, file_path} = req.body;
+  const {title, artist_id, album, duration, audio_file_path, pic_path} = req.body;
+  if (!title || !artist_id || !album || !duration) {
+    return res.status(400).json({ error: 'Please provide title, artist_id, album and duration' });
+  }
 
-  const query = `INSERT INTO songs (title, artist_id, album, duration, file_path) VALUES (?, ?, ?, ?, ?)`;
-  const values = [title, artist_id, album, duration, file_path];
+  const query = `INSERT INTO songs (title, artist_id, album, duration, audio_file_path, pic_path) VALUES (?, ?, ?, ?, ?, ?)`;
+  const values = [title, artist_id, album, duration,  audio_file_path, pic_path];
 
   db.query(query, values, (err, result) => {
     if (err) {
