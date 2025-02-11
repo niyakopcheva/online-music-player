@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 const useGetArtists = () => {
     const [artists, setArtists] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null)
+    const [loadingArtists, setLoading] = useState(true);
+    const [errorArtists, setError] = useState(null)
 
     useEffect(() => {
         const fetchArtists = async () => {
@@ -21,7 +21,7 @@ const useGetArtists = () => {
         fetchArtists();
     }, []);
 
-    return { artists, loading, error };
+    return { artists, loadingArtists, errorArtists };
 
 }
 
