@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { Navigate } from "react-router-dom";
+import useGetSongs from "../hooks/useGetSongs";
+import useGetArtists from "../hooks/useGetArtists";
 
 export default function AdminPage() {
     const [songTitle, setSongTitle] = useState("");
@@ -63,6 +65,16 @@ export default function AdminPage() {
             console.error("Error adding artist: ", err);
         }
     }
+
+    ////////////////// Testing custom hooks
+    /* console.log("Songs:");
+    const {songs, loading, error} = use();
+    console.log(songs, loading, error); */
+
+    /* console.log("Artists:");
+    const {artists, loading, error} = useGetArtists();
+    console.log(artists, loading, error); */
+
     return (
         <main>
             <header className="logo-only">
