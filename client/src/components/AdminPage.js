@@ -58,7 +58,7 @@ export default function AdminPage() {
             });
             
             const data = await response.json();
-            console.log(data); // Logs success message or error
+            console.log(data); 
             console.log("Successfully added artist!");
         } catch(err) {
             console.error("Error adding artist: ", err);
