@@ -57,13 +57,13 @@ app.post('/add-artist', (req, res) => {
 });
 
 app.post('/add-song', (req, res) => {
-  const {title, artist_id, album, duration, audio_file_path, pic_path} = req.body;
-  if (!title || !artist_id || !album || !duration) {
-    return res.status(400).json({ error: 'Please provide title, artist_id, album and duration' });
+  const {name, artist_id, album, duration, audio_file_path, pic_path} = req.body;
+  if (!name || !artist_id || !album || !duration) {
+    return res.status(400).json({ error: 'Please provide name, artist_id, album and duration' });
   }
 
-  const query = `INSERT INTO songs (title, artist_id, album, duration, audio_file_path, pic_path) VALUES (?, ?, ?, ?, ?, ?)`;
-  const values = [title, artist_id, album, duration,  audio_file_path, pic_path];
+  const query = `INSERT INTO songs (name, artist_id, album, duration, audio_file_path, pic_path) VALUES (?, ?, ?, ?, ?, ?)`;
+  const values = [name, artist_id, album, duration,  audio_file_path, pic_path];
 
   db.query(query, values, (err, result) => {
     if (err) {

@@ -28,8 +28,8 @@ export default function Home() {
         
         <ul>
         {songs.map((song) => (
-          <li key={song.song_id}>
-            <strong>{song.title}</strong> <br></br>
+          <li key={song.id}>
+            <strong>{song.name}</strong> <br></br>
             <img className='rounded-full w-8 h-8' src={getProfilePic(artists, song.artist_id)}></img> {getArtistName(artists, song.artist_id)} <br></br>
             <audio controls autoPlay>
               <source src={song.audio_file_path} type='audio/mpeg'></source>
