@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import Spinner from "../components/Spinner";
 
 export const AuthContext = createContext();
 
@@ -16,13 +17,9 @@ export const AuthProvider = ({children}) => {
         return unsubscribe;
     }, []);
 
-    if (loading) {
-        return <div>Loading...</div>; 
-    }
-
     return (
         <AuthContext.Provider value={{ currentUser }}>
-            {children}
+            {loading ? <div className="flex items-center justify-center p-16"><Spinner/></div> : children}
         </AuthContext.Provider>
     )
 }

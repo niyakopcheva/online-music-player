@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { Navigate } from "react-router-dom";
+import Spinner from "./Spinner";
 
 const PrivateRoute = ({ children, role }) => {
     const { currentUser} = useContext(AuthContext);
@@ -26,7 +27,7 @@ const PrivateRoute = ({ children, role }) => {
     }
 
     if (loading) {
-        return <div>Loading...</div>; // Optional loading spinner
+        return <Spinner/>; // Optional loading spinner
     }
 
     if (role && !hasAccess) {

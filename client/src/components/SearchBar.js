@@ -2,6 +2,7 @@ import { useEffect, useState, useRef} from "react"
 import useGetArtists from "../hooks/useGetArtists";
 import useGetSongs from "../hooks/useGetSongs"
 import useDebounceValue from "../hooks/useDebounceValue"
+import Spinner from "./Spinner";
 
 export default function SearchBar({ searchCategory, setArtistID }) {
     const [query, setQuery] = useState("");
@@ -67,7 +68,7 @@ export default function SearchBar({ searchCategory, setArtistID }) {
     }, [data]); //only log data when data actually changes 
     
     
-    if(loading) return <p>Loading...</p>
+    if(loading) return <div className="flex items-center justify-center p-16"><Spinner/></div>
     if(error) return <p>Error: {error.message}</p>
 
     return (

@@ -2,6 +2,7 @@ import { useState } from "react";
 //import useGetSongs from "../hooks/useGetSongs";
 //import useGetArtists from "../hooks/useGetArtists";
 import SearchBar from "./SearchBar";
+import Spinner from "./Spinner";
 
 export default function AdminPage() {
     const [songName, setSongName] = useState("");
@@ -10,8 +11,10 @@ export default function AdminPage() {
     const [duration, setDuration] = useState(null);
     const [audioPath, setAudioPath] = useState("");
     const [songPicPath, setSongPicPath] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const addSong = async () => {
+        setLoading(true);
         const newSong = {
             name: songName,
             artist_id: parseInt(artistID),
@@ -33,16 +36,19 @@ export default function AdminPage() {
           const data = await response.json();
             console.log(data); // Logs success message or error
             console.log("Successfully added song!");
+            setLoading(false);
             alert("Successfully added song!");
           } catch(err) {
             console.error("Error adding song:", err);
           }
+         
     }
     /////////////////////////////////////////////////////////////////
     const [artistName, setArtistName] = useState("");
     const [artistPicPath, setArtistPicPath] = useState("");
 
     const addArtist = async () => {
+        setLoading(true);
         const newArtist = {
             name: artistName,
             profile_pic_path: artistPicPath
@@ -60,9 +66,12 @@ export default function AdminPage() {
             const data = await response.json();
             console.log(data); 
             console.log("Successfully added artist!");
+            setLoading(false);
+            alert("Sucessfully added artist!");
         } catch(err) {
             console.error("Error adding artist: ", err);
         }
+        
     }
 
     ////////////////// Testing custom hooks
@@ -185,6 +194,7 @@ export default function AdminPage() {
                                 
                             </div>
                             
+                            {loading ? <div className="flex items-center justify-center p-16"><Spinner/></div> : null}
                         </section>
         
     </main>
