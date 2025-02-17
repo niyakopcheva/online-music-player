@@ -3,46 +3,16 @@ import { useState } from "react";
 //import useGetArtists from "../hooks/useGetArtists";
 import SearchBar from "./SearchBar";
 import Spinner from "./Spinner";
+import AddSongForm from "./forms/AddSongForm";
+
 
 export default function AdminPage() {
     const [songName, setSongName] = useState("");
     const [artistID, setArtistID] = useState(null);
     const [album, setAlbum] = useState("");
-    const [duration, setDuration] = useState(null);
-    const [audioPath, setAudioPath] = useState("");
-    const [songPicPath, setSongPicPath] = useState("");
     const [loading, setLoading] = useState(false);
 
-    const addSong = async () => {
-        setLoading(true);
-        const newSong = {
-            name: songName,
-            artist_id: parseInt(artistID),
-            album: album,
-            duration: parseInt(duration),
-            audio_file_path: audioPath,
-            pic_path: songPicPath
-          };
-
-          try {
-            const response = await fetch("http://localhost:5000/add-song",{
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                  },
-                body: JSON.stringify(newSong),
-          });
-
-          const data = await response.json();
-            console.log(data); // Logs success message or error
-            console.log("Successfully added song!");
-            setLoading(false);
-            alert("Successfully added song!");
-          } catch(err) {
-            console.error("Error adding song:", err);
-          }
-         
-    }
+    
     /////////////////////////////////////////////////////////////////
     const [artistName, setArtistName] = useState("");
     const [artistPicPath, setArtistPicPath] = useState("");
@@ -74,6 +44,38 @@ export default function AdminPage() {
         
     }
 
+
+    const deleteSong = async () => {
+       /* if (!songName || !album || !artistID) {
+            alert("Please provide song name, album, and artist!");
+            return;
+        } */
+
+        setLoading(true);
+        const song = {
+            name: songName,
+            album: album,
+            artist_id: parseInt(artistID),
+          };
+
+          try {
+            const response = await fetch("http://localhost:5000/delete-song",{
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                  },
+                body: JSON.stringify(song),
+          });
+
+          const data = await response.json();
+            console.log(data); // Logs success message or error
+            setLoading(false);
+            alert("Successfully deleted song!");
+          } catch(err) {
+            console.error("Error deleting song:", err);
+          }
+    }
+
     ////////////////// Testing custom hooks
     /* console.log("Songs:");
     const {songs, loading, error} = use();
@@ -91,23 +93,25 @@ export default function AdminPage() {
                         
                         
                         
-                        <section className="flex flex-col gap-8 py-10 px-40">
+                        <section className="flex flex-col gap-8 py-10 px-40 items-center">
                         <header>
                                     <h1 className="font-bold w-full">Welcome to the Admin Page!</h1>
                         </header>
-                        {/* // add song */}
-                            <div >
-                            <h2 className="font-bold w-full text-2xl py-6">Add song to database</h2>
-            
-                                <form onSubmit={addSong}>
+
+                        <AddSongForm></AddSongForm>
+                        
+
+                        {/* // delete song */}
+                        <div >
+                            <h2 className="font-bold w-full text-2xl py-6">Delete song from database</h2>
+                                <form onSubmit={(e) => {e.preventDefault(); deleteSong();}}>
                                     <div className="flex gap-8">
                                         <div className="flex flex-col">
                                             <label className="font-semibold" htmlFor="title">Song Title</label> 
-                                            <input 
-                                                className="text-black font-normal py-1 px-2 focus:outline-none"
-                                                id="title" 
-                                                onBlur={(e) => setSongName(e.target.value)}
-                                            /> 
+                                            <SearchBar 
+                                            searchCategory={"songs"}
+                                            onChange={(e) => setSongName(e.target.value)}
+                                            ></SearchBar>
                                         </div>
                                         
                                         <div className="flex flex-col">
@@ -115,7 +119,7 @@ export default function AdminPage() {
                                             <input 
                                             className="text-black font-normal py-1 px-2 focus:outline-none"
                                                 id="album"
-                                                onBlur={(e) => setAlbum(e.target.value)}
+                                                onChange={(e) => setAlbum(e.target.value)}
                                                 /> 
                                         </div>
 
@@ -127,47 +131,19 @@ export default function AdminPage() {
                                             ></SearchBar>
                                             {artistID && <p>Selected Artist ID: {artistID}</p>}
                                         </div>
-
-                                        <div className="flex flex-col">
-                                            <label className="font-semibold" htmlFor="duration">Duration (seconds)</label> 
-                                            <input 
-                                            className="text-black font-normal py-1 px-2 focus:outline-none"
-                                                id="duration"
-                                                onBlur={(e) => setDuration(e.target.value)}
-                                                /> 
-                                        </div>
-
-                                        <div className="flex flex-col">
-                                            <label className="font-semibold" htmlFor="audio-file-url">Audio file URL</label> 
-                                            <input 
-                                            className="text-black font-normal py-1 px-2 focus:outline-none"
-                                                id="audio-file-url"
-                                                onBlur={(e) => setAudioPath(e.target.value)}
-                                                /> 
-                                        </div>
-
-                                        <div className="flex flex-col">
-                                            <label className="font-semibold" htmlFor="pic-file-url">Picture file URL</label> 
-                                            <input 
-                                            className="text-black font-normal py-1 px-2 focus:outline-none"
-                                                id="pic-file-url"
-                                                onBlur={(e) => setSongPicPath(e.target.value)}
-                                                /> 
-                                        </div>
                                         
-                                        <button type="submit" className="bg-green-500 text-gray-900 p-5 hover:bg-green-700 font-semibold" >Submit song</button>
+                                        <button type="submit" className="bg-green-500 text-gray-900 p-5 hover:bg-green-700 font-semibold" >Delete song</button>
 
                                         
                                 </div>
                                 </form>
-                                
                             </div>
                             
                         {/* // add artist */}
                             <div >
                             <h2 className="font-bold w-full text-2xl py-6">Add artist to database</h2>
             
-                                <form onSubmit={addArtist}>
+                                <form onSubmit={(e) => {e.preventDefault(); addArtist();}}>
                                     <div className="flex gap-8">
                                         <div className="flex flex-col">
                                             <label className="font-semibold" htmlFor="name">Name</label> 
@@ -193,8 +169,10 @@ export default function AdminPage() {
                                 </form>
                                 
                             </div>
+
                             
-                            {loading ? <div className="flex items-center justify-center p-16"><Spinner/></div> : null}
+
+                            
                         </section>
         
     </main>

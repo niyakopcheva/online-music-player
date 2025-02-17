@@ -40,6 +40,7 @@ export default function SearchBar({ searchCategory, setArtistID }) {
         if (setArtistID) {
             setArtistID(result.id); // Pass selected artist ID to parent
         }
+        setIsFocused(false)
       };
     
     function getAutocompleteResults(query) {
@@ -53,15 +54,15 @@ export default function SearchBar({ searchCategory, setArtistID }) {
     
      useEffect(() => {
        (async () => {
-        if(!debounceQuery) {
-            setResults([]);
-            return;
+        setResults([]);
+        if(debounceQuery.length > 0) {
+            console.log(debounceQuery); //test debouncing
+            const data = await getAutocompleteResults(debounceQuery);
+            setResults(data);
+            console.log(results);
         }
-        //console.log(debounceQuery); //test debouncing
-        const data = await getAutocompleteResults(debounceQuery);
-        setResults(data);
        })();
-    }, [debounceQuery, data])
+    }, [debounceQuery])
 
     useEffect(() => {
         console.log("Items updated:", data);
@@ -72,21 +73,23 @@ export default function SearchBar({ searchCategory, setArtistID }) {
     if(error) return <p>Error: {error.message}</p>
 
     return (
-        <div className="text-white flex-column justify-center mx-auto">
+        <div className="text-white flex-column justify-center mx-auto w-full">
             <input placeholder="Search..." 
                 ref={inputRef}
-                className="py-1 px-2 text-black focus:outline-none" 
+                className="py-1 px-2 text-black focus:outline-none w-full" 
                 value={query} onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setIsFocused(true)}
-                onBlur={() => setTimeout(() => setIsFocused(false), 200)}>
+                //onBlur={() => setIsFocused(false)}
+                >
                 </input>
-            {isFocused && query && (
+            {isFocused && results.length > 0 && (
                 <div className="flex flex-col  items-start" >
                 {results.map(result => <div className="bg-gray-800 w-full px-2 hover:bg-gray-600" 
                 key={result.id}
                 onClick ={() => {
                     handleResultClick(result);
-                }}>
+                }}
+                >
                     {result.name}</div>)}
                 </div>
             )}

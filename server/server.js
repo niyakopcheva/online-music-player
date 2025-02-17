@@ -42,6 +42,8 @@ app.get('/songs', (req, res) => {
   } );
 });
 
+
+
 app.post('/add-artist', (req, res) => {
   const {name, profile_pic_path} = req.body;
   const query = `INSERT INTO artists (name, profile_pic_path) VALUES (?, ?)`;
@@ -73,6 +75,39 @@ app.post('/add-song', (req, res) => {
     }
   });
   
+});
+
+app.delete('/delete-song', (req, res) => {
+  console.log("Received request body:", req.body);
+  const {name, artist_id, album} = req.body;
+
+  if (!name || !artist_id || !album) {
+    return res.status(400).json({ error: 'Please provide song name, album and artist!' });
+  }
+
+  // First, check if the record exists
+  const checkSql = "SELECT * FROM songs WHERE name = ? AND artist_id = ? AND album = ?";
+  db.query(checkSql, [name, artist_id, album], (err, results) => {
+    if (err) {
+        console.error("Error checking song:", err);
+        return res.status(500).json({ error: "Database error" });
+    }
+
+    if (results.length === 0) {
+        return res.status(404).json({ message: "No matching song found" });
+    }
+
+    //If record exists, delete it
+    const deteteSql = "DELETE FROM songs WHERE name= ? AND artist_id= ? AND album= ?";
+    db.query(deteteSql, [name, artist_id, album], (err, result) => {
+        if (err) {
+          console.error("Error deleting song:", err);
+          return res.status(500).json({ error: "Database error" });
+      }
+
+      res.status(200).json({ message: "Song deleted successfully!" });
+    })
+});
 });
 
 
