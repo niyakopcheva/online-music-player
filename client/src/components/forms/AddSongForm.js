@@ -3,9 +3,9 @@ import SearchBar from "../SearchBar";
 
 export default function AddSongForm() {
     const [songName, setSongName] = useState("");
-    const [artistID, setArtistID] = useState(null);
+    const [artistID, setArtistID] = useState("");
     const [album, setAlbum] = useState("");
-    const [duration, setDuration] = useState(null);
+    const [duration, setDuration] = useState("");
     const [audioPath, setAudioPath] = useState("");
     const [songPicPath, setSongPicPath] = useState("");
 
@@ -22,7 +22,7 @@ export default function AddSongForm() {
           };
 
           try {
-            const response = await fetch("http://localhost:5000/add-song",{
+            const response = await fetch("http://localhost:5000/songs",{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

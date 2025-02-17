@@ -42,23 +42,7 @@ app.get('/songs', (req, res) => {
   } );
 });
 
-
-
-app.post('/add-artist', (req, res) => {
-  const {name, profile_pic_path} = req.body;
-  const query = `INSERT INTO artists (name, profile_pic_path) VALUES (?, ?)`;
-  const values = [name, profile_pic_path];
-
-  db.query(query, values, (err, result) => {
-    if(err) {
-      res.status(500).json({ error: 'Failed to add artist', message: err.message });
-    } else {
-      res.status(201).json({ message: 'Artist added successfully', artistID: result.insertId });
-    }
-  });
-});
-
-app.post('/add-song', (req, res) => {
+app.post('/songs', (req, res) => {
   const {name, artist_id, album, duration, audio_file_path, pic_path} = req.body;
   if (!name || !artist_id || !album || !duration) {
     return res.status(400).json({ error: 'Please provide name, artist_id, album and duration' });
@@ -76,6 +60,48 @@ app.post('/add-song', (req, res) => {
   });
   
 });
+
+app.get('/search', (req, res) => {
+  const { category, query } = req.query;
+
+  if (!query) return res.json([]);
+
+  const values = [`%${query}%`];
+
+  let sql;
+  
+  if (category === 'artists') {
+      sql = "SELECT * FROM artists WHERE name LIKE ?";
+  } else if (category === 'songs') {
+      sql = "SELECT * FROM songs WHERE name LIKE ?";
+  } else {
+      return res.status(400).json({ error: "Invalid category" });
+  }
+
+  db.query(sql, values, (err, results) => {
+      if (err) {
+          console.error("Database error:", err);
+          return res.status(500).json({ error: "Database error" });
+      } 
+      res.json(results);
+  });
+});
+
+app.post('/add-artist', (req, res) => {
+  const {name, profile_pic_path} = req.body;
+  const query = `INSERT INTO artists (name, profile_pic_path) VALUES (?, ?)`;
+  const values = [name, profile_pic_path];
+
+  db.query(query, values, (err, result) => {
+    if(err) {
+      res.status(500).json({ error: 'Failed to add artist', message: err.message });
+    } else {
+      res.status(201).json({ message: 'Artist added successfully', artistID: result.insertId });
+    }
+  });
+});
+
+
 
 app.delete('/delete-song', (req, res) => {
   console.log("Received request body:", req.body);
