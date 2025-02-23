@@ -1,10 +1,7 @@
 import { useEffect, useState, useRef } from "react"
-import useGetArtists from "../hooks/useGetArtists";
-import useGetSongs from "../hooks/useGetSongs"
 import useDebounceValue from "../hooks/useDebounceValue"
-import Spinner from "./Spinner";
 
-export default function SearchBar({ searchCategory, setArtistID }) {
+export default function SearchBar({ searchCategory, setArtistID, setSongID, setSongName }) {
     const [query, setQuery] = useState("");
     const [results, setResults] = useState([])
     const [isFocused, setIsFocused] = useState(false);
@@ -49,26 +46,32 @@ export default function SearchBar({ searchCategory, setArtistID }) {
         if (setArtistID) {
             setArtistID(result.id); // Pass selected artist ID to parent
         }
+        if (setSongID) {
+            setSongID(result.id);
+        }
+        if (setSongName) {
+            setSongName(result.name);
+        }
         setIsFocused(false);
     };
 
     if (error) return <p>Error: {error.message}</p>
 
     return (
-        <div className="text-white flex-column justify-center mx-auto w-full">
+        <div className="relative text-white flex-column justify-center mx-auto w-full">
             <input placeholder="Search..."
                 ref={inputRef}
                 className="py-1 px-2 text-black focus:outline-none w-full"
                 value={query} onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setIsFocused(true)}
-            //onBlur={() => setIsFocused(false)}
+                onBlur={() => setIsFocused(false)}
             >
             </input>
             {isFocused && results.length > 0 && (
-                <div className="flex flex-col items-start" >
-                    {results.map(result => <div className="bg-gray-300 text-black w-full px-2 hover:bg-green-500"
+                <div className="absolute top-full left-0 flex flex-col items-start p-static w-full h-[100px] overflow-auto z-50" >
+                    {results.map(result => <div className="cursor-pointer bg-gray-300 text-black w-full px-2 hover:bg-green-500"
                         key={result.id}
-                        onClick={() => {
+                        onMouseDown={() => {
                             handleResultClick(result);
                         }}
                     >

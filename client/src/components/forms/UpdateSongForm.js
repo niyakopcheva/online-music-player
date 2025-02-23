@@ -1,66 +1,92 @@
 import { useState } from "react";
 import SearchBar from "../SearchBar";
 
-export default function AddSongForm() {
+export default function UpdateSongForm() {
+    const [songID, setSongID] = useState(null);
     const [songName, setSongName] = useState("");
     const [artistID, setArtistID] = useState("");
     const [album, setAlbum] = useState("");
     const [duration, setDuration] = useState("");
     const [audioPath, setAudioPath] = useState("");
     const [songPicPath, setSongPicPath] = useState("");
+
     const [isFilled, setIsFilled] = useState(true);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!songName || !artistID || !album || !duration || !audioPath || !songPicPath) {
+        if (!songID) {
+            alert("Please select song to update!")
+        }
+
+        if (!songName && !artistID && !album && !duration && !audioPath && !songPicPath) {
             setIsFilled(false);
             return;
         }
 
-        const newSong = {
-            name: songName,
-            artist_id: parseInt(artistID),
-            album: album,
-            duration: parseInt(duration),
-            audio_file_path: audioPath,
-            pic_path: songPicPath
-        };
+        const song = {
+            id: parseInt(songID),
+            name: songName || undefined,
+            artist_id: parseInt(artistID) || undefined,
+            album: album || undefined,
+            duration: parseInt(duration) || undefined,
+            audio_file_path: audioPath || undefined,
+            pic_path: songPicPath || undefined
+        }
 
         try {
             const response = await fetch("http://localhost:5000/songs", {
-                method: 'POST',
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newSong),
+                body: JSON.stringify(song)
             });
 
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.error || "Failed to add song");
+                if (response.status === 400) {
+                    throw new Error(data.error || "Bad Request: Missing required fields.");
+                } else if (response.status === 404) {
+                    throw new Error(data.message || "Song not found.");
+                } else if (response.status === 500) {
+                    throw new Error(data.error || "Internal Server Error.");
+                } else {
+                    throw new Error("An unexpected error occurred.");
+                }
             }
 
             console.log(data); // Logs success message or error
-            console.log("Successfully added song!");
-            alert("Successfully added song!");
+            console.log("Successfully updated song!");
+            alert("Successfully updated song!");
+            setSongID("");
+            setArtistID("");
         } catch (err) {
-            console.error("Error adding song:", err);
-            alert(`Error adding song: ${err.message}`);
+            console.log("Error updating song ", err);
+            alert(`Error updating song: ${err.message}`);
         }
-
-    };
-
+    }
 
     return (
         <div className="p-6 bg-gray-800 rounded-lg md:max-w-[800px] w-full min-w-60">
-            <h2 className="text-xl font-bold text-white mb-4 text-center">Add Song</h2>
+            <h2 className="text-xl font-bold text-white mb-4 text-center">Update Song</h2>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
 
                 <div className="flex flex-col">
-                    <label className="text-white">Title</label>
+                    <label className="text-white"><b className="text-green-500">REQUIRED:</b> Select song</label>
+                    <div className="w-full">
+                        <SearchBar searchCategory={'songs'}
+                            setSongID={setSongID}
+                        />
+                        {songID && <p>Selected Song ID: {songID}</p>}
+                    </div>
+                </div>
+
+
+                <div className="flex flex-col">
+                    <label className="text-white">Title (optional)</label>
                     <input
                         type="text"
                         className="text-black font-normal py-1 px-2 focus:outline-none w-full"
@@ -70,7 +96,7 @@ export default function AddSongForm() {
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-white">Album</label>
+                    <label className="text-white">Album (optional)</label>
                     <input
                         type="text"
                         className="text-black font-normal py-1 px-2 focus:outline-none"
@@ -80,7 +106,7 @@ export default function AddSongForm() {
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-white">Artist</label>
+                    <label className="text-white">Artist (optional)</label>
                     <div className="w-full">
                         <SearchBar searchCategory={'artists'}
                             setArtistID={setArtistID}
@@ -90,7 +116,7 @@ export default function AddSongForm() {
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-white">Duration(seconds)</label>
+                    <label className="text-white">Duration(seconds) (optional)</label>
                     <input
                         type="text"
                         className="text-black font-normal py-1 px-2 focus:outline-none"
@@ -99,7 +125,7 @@ export default function AddSongForm() {
                     />
                 </div>
                 <div className="flex flex-col">
-                    <label className="text-white">Audio file URL</label>
+                    <label className="text-white">Audio file URL (optional)</label>
                     <input
                         type="text"
                         className="text-black font-normal py-1 px-2 focus:outline-none"
@@ -108,7 +134,7 @@ export default function AddSongForm() {
                     />
                 </div>
                 <div className="flex flex-col">
-                    <label className="text-white">Picture file URL</label>
+                    <label className="text-white">Picture file URL (optional)</label>
                     <input
                         type="text"
                         className="text-black font-normal py-1 px-2 focus:outline-none"
@@ -119,7 +145,7 @@ export default function AddSongForm() {
 
                 {!isFilled && (
                     <div className="text-red-600 bg-red-300 text-center p-1 font-semibold rounded-sm">
-                        Please fill in all fields!
+                        Please fill in at least one field!
                     </div>
                 )}
 
@@ -128,9 +154,9 @@ export default function AddSongForm() {
                     type="submit"
                     className="mt-4 bg-green-500 text-gray-900 p-3 hover:bg-green-700 font-semibold"
                 >
-                    Add song
+                    Update song
                 </button>
             </form>
         </div>
-    )
+    );
 }
