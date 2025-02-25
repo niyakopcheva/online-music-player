@@ -53,11 +53,11 @@ export default function DeleteSongForm() {
 
     return (
         <div className="p-6 bg-gray-800 rounded-lg md:max-w-[800px] w-full min-w-60">
-            <h2 className="text-xl font-bold text-white mb-4 text-center">Delete Song</h2>
+            <h2 className="text-2xl font-bold text-white mb-4 text-center">Delete Song</h2>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
                 <div className="flex flex-col">
-                    <label className="text-white">Title</label>
+                    <label className="text-white font-semibold">Title</label>
                     <div className="w-full">
                         <SearchBar searchCategory={'songs'}
                             setSongName={setSongName}
@@ -67,12 +67,12 @@ export default function DeleteSongForm() {
 
 
                 <div className="flex flex-col">
-                    <label className="text-white">Artist</label>
+                    <label className="text-white font-semibold">Artist</label>
                     <div className="w-full">
                         <SearchBar searchCategory={'artists'}
                             setArtistID={setArtistID}
                         />
-                        {artistID && <p>Selected Artist ID: {artistID}</p>}
+                        {/*artistID && <p>Selected Artist ID: {artistID}</p> */}
                     </div>
                 </div>
 

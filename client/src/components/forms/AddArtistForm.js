@@ -48,25 +48,25 @@ export default function AddArtistForm() {
 
     return (
         <div className="p-6 bg-gray-800 rounded-lg md:max-w-[800px] w-full min-w-60">
-            <h2 className="text-xl font-bold text-white mb-4 text-center">Add Artist</h2>
+            <h2 className="text-2xl font-bold text-white mb-4 text-center">Add Artist</h2>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
 
                 <div className="flex flex-col">
-                    <label className="text-white">Name</label>
+                    <label className="text-white font-semibold">Name</label>
                     <input
                         type="text"
-                        className="text-black font-normal py-1 px-2 focus:outline-none w-full"
+                        className="font-normal py-1 px-2 focus:outline-none w-full bg-transparent border-b-[1px]"
                         value={artistName}
                         onChange={(e) => setArtistName(e.target.value)}
                     />
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-white">Picture file URL</label>
+                    <label className="text-white font-semibold">Picture file URL</label>
                     <input
                         type="text"
-                        className="text-black font-normal py-1 px-2 focus:outline-none"
+                        className="font-normal py-1 px-2 focus:outline-none  bg-transparent border-b-[1px]"
                         value={picPath}
                         onChange={(e) => setPicPath(e.target.value)}
                     />

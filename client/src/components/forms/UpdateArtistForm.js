@@ -58,11 +58,11 @@ export default function UpdateArtistForm() {
     }
     return (
         <div className="p-6 bg-gray-800 rounded-lg md:max-w-[800px] w-full min-w-60">
-            <h2 className="text-xl font-bold text-white mb-4 text-center">Update Artist</h2>
+            <h2 className="text-2xl font-bold text-white mb-4 text-center">Update Artist</h2>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
                 <div className="flex flex-col">
-                    <label className="text-white"><b className="text-green-500">REQUIRED:</b> Select artist</label>
+                    <label className="text-white font-semibold flex gap-1"><div className="text-green-500">*</div> Select artist</label>
                     <div className="w-full">
                         <SearchBar searchCategory={'artists'}
                             setArtistID={setArtistID}
@@ -72,20 +72,20 @@ export default function UpdateArtistForm() {
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-white">New name (optional)</label>
+                    <label className="text-white font-semibold">New name (optional)</label>
                     <input
                         type="text"
-                        className="text-black font-normal py-1 px-2 focus:outline-none w-full"
+                        className="font-normal py-1 px-2 focus:outline-none w-full bg-transparent border-b-[1px]"
                         value={artistName}
                         onChange={(e) => setArtistName(e.target.value)}
                     />
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-white">New picture path (optional)</label>
+                    <label className="text-white font-semibold">New picture path (optional)</label>
                     <input
                         type="text"
-                        className="text-black font-normal py-1 px-2 focus:outline-none w-full"
+                        className="font-normal py-1 px-2 focus:outline-none w-full bg-transparent border-b-[1px]"
                         value={picPath}
                         onChange={(e) => setPicPath(e.target.value)}
                     />

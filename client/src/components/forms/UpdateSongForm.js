@@ -70,43 +70,43 @@ export default function UpdateSongForm() {
 
     return (
         <div className="p-6 bg-gray-800 rounded-lg md:max-w-[800px] w-full min-w-60">
-            <h2 className="text-xl font-bold text-white mb-4 text-center">Update Song</h2>
+            <h2 className="text-2xl font-bold text-white mb-4 text-center">Update Song</h2>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
 
                 <div className="flex flex-col">
-                    <label className="text-white"><b className="text-green-500">REQUIRED:</b> Select song</label>
+                    <label className="text-white font-semibold flex gap-1"><div className="text-green-500">*</div> Select song</label>
                     <div className="w-full">
                         <SearchBar searchCategory={'songs'}
                             setSongID={setSongID}
                         />
-                        {songID && <p>Selected Song ID: {songID}</p>}
+                        {/* songID && <p>Selected Song ID: {songID}</p> */}
                     </div>
                 </div>
 
 
                 <div className="flex flex-col">
-                    <label className="text-white">Title (optional)</label>
+                    <label className="text-white font-semibold">Title (optional)</label>
                     <input
                         type="text"
-                        className="text-black font-normal py-1 px-2 focus:outline-none w-full"
+                        className="font-normal py-1 px-2 focus:outline-none w-full bg-transparent border-b-[1px]"
                         value={songName}
                         onChange={(e) => setSongName(e.target.value)}
                     />
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-white">Album (optional)</label>
+                    <label className="text-white font-semibold">Album (optional)</label>
                     <input
                         type="text"
-                        className="text-black font-normal py-1 px-2 focus:outline-none"
+                        className="font-normal py-1 px-2 focus:outline-none w-full bg-transparent border-b-[1px]"
                         value={album}
                         onChange={(e) => setAlbum(e.target.value)}
                     />
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-white">Artist (optional)</label>
+                    <label className="text-white font-semibold">Artist (optional)</label>
                     <div className="w-full">
                         <SearchBar searchCategory={'artists'}
                             setArtistID={setArtistID}
@@ -116,28 +116,28 @@ export default function UpdateSongForm() {
                 </div>
 
                 <div className="flex flex-col">
-                    <label className="text-white">Duration(seconds) (optional)</label>
+                    <label className="text-white font-semibold">Duration(seconds) (optional)</label>
                     <input
                         type="text"
-                        className="text-black font-normal py-1 px-2 focus:outline-none"
+                        className="font-normal py-1 px-2 focus:outline-none w-full bg-transparent border-b-[1px]"
                         value={duration}
                         onChange={(e) => setDuration(e.target.value)}
                     />
                 </div>
                 <div className="flex flex-col">
-                    <label className="text-white">Audio file URL (optional)</label>
+                    <label className="text-white font-semibold">Audio file URL (optional)</label>
                     <input
                         type="text"
-                        className="text-black font-normal py-1 px-2 focus:outline-none"
+                        className="font-normal py-1 px-2 focus:outline-none w-full bg-transparent border-b-[1px]"
                         value={audioPath}
                         onChange={(e) => setAudioPath(e.target.value)}
                     />
                 </div>
                 <div className="flex flex-col">
-                    <label className="text-white">Picture file URL (optional)</label>
+                    <label className="text-white font-semibold">Picture file URL (optional)</label>
                     <input
                         type="text"
-                        className="text-black font-normal py-1 px-2 focus:outline-none"
+                        className="font-normal py-1 px-2 focus:outline-none w-full bg-transparent border-b-[1px]"
                         value={songPicPath}
                         onChange={(e) => setSongPicPath(e.target.value)}
                     />

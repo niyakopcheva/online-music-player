@@ -61,7 +61,7 @@ export default function SearchBar({ searchCategory, setArtistID, setSongID, setS
         <div className="relative text-white flex-column justify-center mx-auto w-full">
             <input placeholder="Search..."
                 ref={inputRef}
-                className="py-1 px-2 text-black focus:outline-none w-full"
+                className="font-normal py-1 px-2 focus:outline-none w-full bg-transparent border-b-[1px] placeholder-gray-300"
                 value={query} onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
