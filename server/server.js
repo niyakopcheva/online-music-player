@@ -41,7 +41,7 @@ app.get('/search', (req, res) => {
   if (category === 'artists') {
     sql = "SELECT id, name FROM artists WHERE name LIKE ? LIMIT 10 OFFSET ?";
   } else if (category === 'songs') {
-    sql = "SELECT id, name FROM songs WHERE name LIKE ?";
+    sql = "SELECT id, name FROM songs WHERE name LIKE ? LIMIT 10 OFFSET ?";
   } else {
     return res.status(400).json({ error: "Invalid category" });
   }
